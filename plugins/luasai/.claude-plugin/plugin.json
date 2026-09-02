@@ -1,0 +1,12 @@
+{
+  "name": "luasai",
+  "version": "0.2.0",
+  "description": "Luasai account and partner intelligence with the governed Account Intelligence workflow.",
+  "author": {
+    "name": "Luasai",
+    "url": "https://luasai.app"
+  },
+  "homepage": "https://platform.luasai.app",
+  "repository": "https://github.com/Luasai/luasai-claude-plugin",
+  "license": "Proprietary"
+}

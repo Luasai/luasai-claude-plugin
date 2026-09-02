@@ -1,0 +1,27 @@
+{
+  "name": "luasai",
+  "owner": {
+    "name": "Luasai",
+    "url": "https://luasai.app"
+  },
+  "description": "Luasai Account Intelligence for governed account and partner research",
+  "version": "0.2.0",
+  "plugins": [
+    {
+      "name": "luasai",
+      "displayName": "Luasai Account Intelligence",
+      "source": "./plugins/luasai",
+      "description": "Governed account and partner intelligence with the Account Intelligence workflow",
+      "version": "0.2.0",
+      "author": {
+        "name": "Luasai",
+        "url": "https://luasai.app"
+      },
+      "homepage": "https://platform.luasai.app",
+      "repository": "https://github.com/Luasai/luasai-claude-plugin",
+      "license": "Proprietary",
+      "category": "productivity",
+      "tags": ["accounts", "partners", "intelligence", "mcp"]
+    }
+  ]
+}
