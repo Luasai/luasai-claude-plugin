@@ -26,10 +26,10 @@ The normal workflow requires:
 - `luasai_graph_reveal` when the requested named result is not already
   available.
 
-`luasai_graph_report_data_issue` is an optional QA follow-up. If a required
-tool is unavailable, complete only the supported stages and report the exact
-blocker. Do not replace Luasai with a database query, repository data, or web
-research.
+If a required tool is unavailable, complete only the supported stages and
+report the exact blocker. Do not replace Luasai with a database query,
+repository data, or web research. The public OAuth plugin does not expose the
+API-key-only Luasai data-health writer.
 
 ## Method
 

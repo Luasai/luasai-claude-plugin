@@ -150,25 +150,10 @@ The default workflow is Luasai-only:
 Never present external research as a Luasai relationship. A blank caused by
 missing Luasai evidence remains blank in the Luasai column.
 
-## Data-health observations
+## Data-health boundary
 
-During normal work, `luasai_graph_report_data_issue` may be used when the
-returned trusted publicv2 profile itself exposes a concrete wrong, missing,
-stale, conflicting, or duplicate fact. Internal contradictions between its
-name, legal name, aliases, domains, description, industry, geography, or
-hierarchy can qualify.
-
-Do not report:
-
-- a candidate that is merely not the user's intended company;
-- ordinary ambiguity or a retrieval miss;
-- a missing relationship;
-- private spreadsheet or CRM content;
-- personal data or secrets; or
-- unsupported suspicion.
-
-The report is an untrusted suggestion for Luasai review and never changes the
-current profile or ranking. An official external URL already present in the
-task may be labeled as non-canonical corroboration, but external material does
-not assert a replacement graph fact. Continue the user's task with the best
-supported current evidence.
+The public OAuth plugin does not expose Luasai's API-key-only data-health
+writer. If a returned profile appears wrong, missing, stale, conflicting, or
+duplicated, continue with the best supported current evidence, preserve an
+explicit abstention where identity is unsafe, and direct the user to Luasai
+support rather than attempting an unavailable write.
