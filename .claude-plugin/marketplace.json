@@ -1,27 +1,32 @@
 {
   "name": "luasai",
   "owner": {
-    "name": "Luasai",
+    "name": "Luasai LLC",
     "url": "https://luasai.app"
   },
-  "description": "Luasai Account Intelligence for governed account and partner research",
-  "version": "0.2.0",
+  "description": "Bring Luasai’s partner intelligence into Claude. Find relevant reseller partners for your target accounts, explore your opportunity pipeline, and enrich account lists.",
+  "version": "0.3.20",
   "plugins": [
     {
       "name": "luasai",
-      "displayName": "Luasai Account Intelligence",
+      "displayName": "Luasai",
       "source": "./plugins/luasai",
-      "description": "Governed account and partner intelligence with the Account Intelligence workflow",
-      "version": "0.2.0",
+      "description": "Bring Luasai’s partner intelligence into Claude. Find relevant reseller partners for your target accounts, explore your opportunity pipeline, and enrich account lists.",
+      "version": "0.3.20",
       "author": {
-        "name": "Luasai",
+        "name": "Luasai LLC",
         "url": "https://luasai.app"
       },
       "homepage": "https://platform.luasai.app",
       "repository": "https://github.com/Luasai/luasai-claude-plugin",
       "license": "Proprietary",
       "category": "productivity",
-      "tags": ["accounts", "partners", "intelligence", "mcp"]
+      "tags": [
+        "accounts",
+        "partners",
+        "intelligence",
+        "mcp"
+      ]
     }
   ]
 }
