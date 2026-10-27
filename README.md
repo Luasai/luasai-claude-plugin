@@ -1,53 +1,36 @@
-# Luasai Account Intelligence for Claude
+# Luasai
 
-This public repository contains the declarative Luasai plugin for Claude Code
-and Cowork. It combines the Account Intelligence Skill with the hosted Luasai
-MCP at `https://mcp.luasai.app/mcp`.
+Bring Luasai’s partner intelligence into Claude. Find relevant reseller partners for your target accounts, explore your opportunity pipeline, and enrich account lists.
 
-It contains no Luasai backend code, credentials, customer data, hooks,
-executables, local servers, or installation scripts.
+Partners for target accounts
 
-## What it does
+## Try these prompts
 
-The Account Intelligence Skill helps a user enrich an account list using the
-governed Luasai organization and partner graph. Claude keeps the user’s file
-and decision context; Luasai supplies bounded organization and relationship
-results. The Skill requires positive identity evidence and reports an explicit
-abstention when it cannot identify an organization safely.
+- Find relevant partners for my target account and explain why they fit.
+- Help me enrich this account list with company matches and relevant partners.
+- Summarize my open opportunities this quarter by stage and value.
 
-Installing the plugin grants no data access. Each user must authorize Luasai
-through OAuth, and the server applies that user’s active tenant membership and
-scopes. Paid relationship reveals remain subject to the server quote and the
-active client’s confirmation flow.
+## Connect
+
+This declarative plugin combines the existing Account Intelligence Skill with the hosted Luasai MCP at `https://mcp.luasai.app/mcp`. Each user authorizes Luasai through OAuth. An active Luasai account and eligible workspace are required. Organization approval may be needed. Paid reveals require a quote, explicit confirmation, and sufficient Luasai credits.
+
+The plugin contains no local server, executable, hooks, credential header, or environment-variable credential forwarding. It sends only typed tool arguments to the remote Luasai service.
 
 ## Install
-
-For Claude Code, add this marketplace source and then install the named plugin:
 
 ```text
 /plugin marketplace add Luasai/luasai-claude-plugin
 /plugin install luasai@luasai
 ```
 
-For Cowork or other Claude plugin surfaces, use the provider-approved plugin
-installation path for this repository. An organization administrator may need
-to approve the plugin and the Luasai remote connector. After installation,
-connect the Luasai MCP when Claude prompts for OAuth.
+Use the provider-approved install path on other supported Claude surfaces. Installing grants no Luasai data access. Tool availability follows the connected workspace and server inventory.
 
-## Support and privacy
+## Documentation, privacy, terms and support
 
-- Privacy policy: <https://platform.luasai.app/privacy>
-- Support: <mailto:support@luasai.com>
-- Security reporting: see [SECURITY.md](SECURITY.md)
+- [Claude connector guide](https://platform.luasai.app/docs/#/claude-connector)
+- [Privacy notice](https://platform.luasai.app/legal/self-service-privacy-notice.txt)
+- [Platform terms](https://platform.luasai.app/legal/self-service-platform-terms.txt)
+- [Support](https://docs.luasai.app/docs/) or [support@luasai.com](mailto:support@luasai.com)
+- [Security reporting](SECURITY.md)
 
-## Repository contents
-
-- `.claude-plugin/marketplace.json` — marketplace catalog.
-- `plugins/luasai/.claude-plugin/plugin.json` — plugin identity and release
-  metadata.
-- `plugins/luasai/.mcp.json` — the production remote MCP declaration.
-- `plugins/luasai/skills/account-intelligence/` — declarative Skill and its
-  public references.
-
-This repository is intentionally limited to reviewable release assets. Luasai
-operates the remote MCP and OAuth service separately.
+This repository contains only the marketplace catalog, public plugin metadata, existing declarative Skill and references, remote MCP declaration, approved logo, and public support/legal documentation.
