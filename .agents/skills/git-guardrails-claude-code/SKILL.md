@@ -17,7 +17,11 @@ Sets up a PreToolUse hook that intercepts and blocks dangerous git commands befo
 
 Git global options before the subcommand (`git -C <dir> push`, `git -c k=v push`, `git --git-dir=<dir> push`) are caught too.
 
-The hook works with GNU and macOS/BSD grep. It uses `jq` to read the command when available and falls back to scanning the raw hook input when it isn't, so non-git commands keep working either way. If the input can't be parsed and mentions git, the command is blocked. It is a pattern match that stops mistakes, not a sandbox against deliberate bypasses.
+It also catches `/usr/bin/git`, `command git` and backslash line continuations, and works with GNU and macOS/BSD grep.
+
+The hook needs `jq` to check git commands. Without it, any command that mentions git is blocked and everything else runs normally.
+
+It is a literal pattern check that stops mistakes. Shell indirection (variables, `eval`, aliases) is out of scope.
 
 When blocked, Claude sees a message telling it that it does not have authority to access these commands.
 
