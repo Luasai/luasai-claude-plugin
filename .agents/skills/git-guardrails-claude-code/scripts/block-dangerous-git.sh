@@ -46,8 +46,10 @@ DANGEROUS_PATTERNS=(
   "${GIT}restore${SP}${ARGS}\\.${END}"
 )
 
+# Check the command as written and with quote characters removed ('.' "push").
+UNQUOTED=$(printf '%s' "$COMMAND" | tr -d "\"'")
 for pattern in "${DANGEROUS_PATTERNS[@]}"; do
-  if printf '%s\n' "$COMMAND" | grep -qE -- "$pattern"; then
+  if printf '%s\n%s\n' "$COMMAND" "$UNQUOTED" | grep -qE -- "$pattern"; then
     echo "BLOCKED: this is a destructive git command. The user has prevented you from doing this." >&2
     exit 2
   fi
