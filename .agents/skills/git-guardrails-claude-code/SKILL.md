@@ -11,9 +11,13 @@ Sets up a PreToolUse hook that intercepts and blocks dangerous git commands befo
 
 - `git push` (all variants including `--force`)
 - `git reset --hard`
-- `git clean -f` / `git clean -fd`
-- `git branch -D`
-- `git checkout .` / `git restore .`
+- `git clean` with `-f` / `--force` in any form (`-fd`, `-df`, `-d -f`)
+- `git branch -D` / `git branch --delete --force`
+- `git checkout .` / `git restore .` (including `-- .`)
+
+Git global options before the subcommand (`git -C <dir> push`, `git -c k=v push`, `git --git-dir=<dir> push`) are caught too.
+
+The hook needs `jq`. If `jq` is missing or the hook input can't be parsed, it blocks the command rather than letting it through. It is a pattern match that stops mistakes, not a sandbox against deliberate bypasses.
 
 When blocked, Claude sees a message telling it that it does not have authority to access these commands.
 
