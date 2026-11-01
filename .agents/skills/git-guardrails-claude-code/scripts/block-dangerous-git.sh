@@ -1,36 +1,45 @@
 #!/bin/bash
 # Claude Code PreToolUse hook: blocks destructive git commands.
-# Fails closed: if the hook input can't be parsed, the command is blocked.
-
-if ! command -v jq >/dev/null 2>&1; then
-  echo "BLOCKED: git guardrail hook needs jq to inspect commands, and jq is not installed." >&2
-  exit 2
-fi
+# Uses POSIX character classes only, so it behaves the same with GNU and BSD/macOS grep.
 
 INPUT=$(cat)
-if ! COMMAND=$(printf '%s' "$INPUT" | jq -er '.tool_input.command // empty' 2>/dev/null) || [ -z "$COMMAND" ]; then
-  echo "BLOCKED: git guardrail hook could not read the command from its input." >&2
-  exit 2
+
+if command -v jq >/dev/null 2>&1; then
+  if ! COMMAND=$(printf '%s' "$INPUT" | jq -er '.tool_input.command // empty' 2>/dev/null) || [ -z "$COMMAND" ]; then
+    # Can't read the command: block only if the raw input mentions git at all.
+    if printf '%s' "$INPUT" | grep -q 'git'; then
+      echo "BLOCKED: git guardrail hook could not read this command, so it was not allowed." >&2
+      exit 2
+    fi
+    exit 0
+  fi
+else
+  # No jq: fall back to the raw JSON so non-git commands still run.
+  COMMAND=${INPUT//\\\"/\"}
 fi
 
+SP='[[:space:]]'
+NS='[^[:space:]]'
+VAL="(\"[^\"]*\"|'[^']*'|${NS}+)"
 # "git" plus any global options before the subcommand
-# (e.g. -C <dir>, -c k=v, --git-dir=<dir>, --no-pager).
-GIT='(^|[^[:alnum:]_./-])git(\s+(-[Cc]\s+\S+|--(git-dir|work-tree|namespace|exec-path)(=|\s+)\S+|-[[:alpha:]]|--[[:alpha:]][-[:alnum:]]*(=\S+)?))*\s+'
-# Rest of a single shell command (stop at ; & |)
-ARGS='([^;&|]*\s)?'
+# (-C <dir>, -C<dir>, -c k=v, --git-dir=<dir>, --git-dir <dir>, --no-pager, ...).
+GIT="(^|[^[:alnum:]_./-])git(${SP}+(-[Cc]${SP}*${VAL}|--(git-dir|work-tree|namespace|exec-path)(=|${SP}+)${VAL}|-[[:alpha:]]|--[[:alpha:]][-[:alnum:]]*(=${VAL})?))*${SP}+"
+# Rest of a single shell command (stops at ; & |)
+ARGS="([^;&|]*${SP})?"
+END="(${SP}|\$|[;&|\"])"
 
 DANGEROUS_PATTERNS=(
-  "${GIT}push(\s|$)"
-  "${GIT}reset\s${ARGS}--hard"
-  "${GIT}clean\s${ARGS}(-[[:alpha:]]*f|--force)"
-  "${GIT}branch\s${ARGS}(-[[:alpha:]]*D|--delete\s${ARGS}--force|--force\s${ARGS}(-d|--delete))"
-  "${GIT}checkout\s${ARGS}\.(\s|$|[;&|])"
-  "${GIT}restore\s${ARGS}\.(\s|$|[;&|])"
+  "${GIT}push${END}"
+  "${GIT}reset${SP}${ARGS}--hard"
+  "${GIT}clean${SP}${ARGS}(-[[:alpha:]]*f|--force)"
+  "${GIT}branch${SP}${ARGS}(-[[:alpha:]]*D|--delete${SP}${ARGS}--force|--force${SP}${ARGS}(-d|--delete))"
+  "${GIT}checkout${SP}${ARGS}\\.${END}"
+  "${GIT}restore${SP}${ARGS}\\.${END}"
 )
 
 for pattern in "${DANGEROUS_PATTERNS[@]}"; do
   if printf '%s\n' "$COMMAND" | grep -qE -- "$pattern"; then
-    echo "BLOCKED: '$COMMAND' is a destructive git command. The user has prevented you from doing this." >&2
+    echo "BLOCKED: this is a destructive git command. The user has prevented you from doing this." >&2
     exit 2
   fi
 done
