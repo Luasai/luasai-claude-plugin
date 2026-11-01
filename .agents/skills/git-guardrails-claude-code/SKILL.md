@@ -12,7 +12,7 @@ Sets up a PreToolUse hook that intercepts and blocks dangerous git commands befo
 - `git push` (all variants including `--force`)
 - `git reset --hard`
 - `git clean` with `-f` / `--force` in any form (`-fd`, `-df`, `-d -f`)
-- `git branch -D` / `git branch --delete --force`
+- `git branch -D` / `-df` / `--delete --force`
 - `git checkout .` / `git restore .` (including `-- .`)
 
 Git global options before the subcommand (`git -C <dir> push`, `git -c k=v push`, `git --git-dir=<dir> push`) are caught too.

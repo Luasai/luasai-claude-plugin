@@ -32,7 +32,7 @@ DANGEROUS_PATTERNS=(
   "${GIT}push${END}"
   "${GIT}reset${SP}${ARGS}--hard"
   "${GIT}clean${SP}${ARGS}(-[[:alpha:]]*f|--force)"
-  "${GIT}branch${SP}${ARGS}(-[[:alpha:]]*D|--delete${SP}${ARGS}--force|--force${SP}${ARGS}(-d|--delete))"
+  "${GIT}branch${SP}${ARGS}(-[[:alpha:]]*D|-[[:alpha:]]*d[[:alpha:]]*f|-[[:alpha:]]*f[[:alpha:]]*d|(-d|--delete)${SP}${ARGS}(-f|--force)|(-f|--force)${SP}${ARGS}(-d|--delete))"
   "${GIT}checkout${SP}${ARGS}\\.${END}"
   "${GIT}restore${SP}${ARGS}\\.${END}"
 )
